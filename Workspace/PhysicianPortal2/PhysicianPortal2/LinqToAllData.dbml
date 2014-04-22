@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="csc450mcrowell" Class="LinqToAllDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=cscsql2.carrollu.edu;Initial Catalog=csc450mcrowell;User ID=csc450mcrowell" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="csc450mcrowellConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.INTERFACELOG" Member="INTERFACELOGs">
+    <Type Name="INTERFACELOG">
+      <Column Name="Date_Time" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Log_Entry" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[USER]" Member="USERs">
+    <Type Name="USER">
+      <Column Name="User_Name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Is_Physician" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Is_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Is_Admin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="USER_PHYSICIAN" Member="PHYSICIANs" ThisKey="User_Name" OtherKey="User_Name" Type="PHYSICIAN" />
+      <Association Name="USER_STAFF" Member="STAFFs" ThisKey="User_Name" OtherKey="User_Name" Type="STAFF" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[ORDER]" Member="ORDERs">
+    <Type Name="ORDER">
+      <Column Name="Order_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Physician_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Test_Code" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Order_Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Order_Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Patient_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Site_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ORDER_RESULT" Member="RESULTs" ThisKey="Order_ID" OtherKey="Order_ID" Type="RESULT" />
+      <Association Name="PATIENT_ORDER" Member="PATIENT" ThisKey="Patient_ID" OtherKey="Patient_ID" Type="PATIENT" IsForeignKey="true" />
+      <Association Name="PHYSICIAN_ORDER" Member="PHYSICIAN" ThisKey="Physician_ID" OtherKey="Physician_ID" Type="PHYSICIAN" IsForeignKey="true" />
+      <Association Name="SITE_ORDER" Member="SITE" ThisKey="Site_ID" OtherKey="Site_ID" Type="SITE" IsForeignKey="true" />
+      <Association Name="TEST_ORDER" Member="TEST" ThisKey="Test_Code" OtherKey="Test_Code" Type="TEST" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PATIENT" Member="PATIENTs">
+    <Type Name="PATIENT">
+      <Column Name="Patient_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Last_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="First_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DOB" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Zip" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="PATIENT_ORDER" Member="ORDERs" ThisKey="Patient_ID" OtherKey="Patient_ID" Type="ORDER" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PHYSICIAN" Member="PHYSICIANs">
+    <Type Name="PHYSICIAN">
+      <Column Name="Physician_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Last_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="First_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UPIN" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Specialty" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="User_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="PHYSICIAN_ORDER" Member="ORDERs" ThisKey="Physician_ID" OtherKey="Physician_ID" Type="ORDER" />
+      <Association Name="USER_PHYSICIAN" Member="USER" ThisKey="User_Name" OtherKey="User_Name" Type="USER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RESULT" Member="RESULTs">
+    <Type Name="RESULT">
+      <Column Name="Result_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Result_Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Resulted_By" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Result_Report" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Order_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Physician_Notes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="ORDER_RESULT" Member="ORDER" ThisKey="Order_ID" OtherKey="Order_ID" Type="ORDER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SITE" Member="SITEs">
+    <Type Name="SITE">
+      <Column Name="Site_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Zip" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="SITE_ORDER" Member="ORDERs" ThisKey="Site_ID" OtherKey="Site_ID" Type="ORDER" />
+    </Type>
+  </Table>
+  <Table Name="dbo.STAFF" Member="STAFFs">
+    <Type Name="STAFF">
+      <Column Name="Staff_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Last_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="First_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="User_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="USER_STAFF" Member="USER" ThisKey="User_Name" OtherKey="User_Name" Type="USER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TEST" Member="TESTs">
+    <Type Name="TEST">
+      <Column Name="Test_Code" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TEST_ORDER" Member="ORDERs" ThisKey="Test_Code" OtherKey="Test_Code" Type="ORDER" />
+    </Type>
+  </Table>
+</Database>

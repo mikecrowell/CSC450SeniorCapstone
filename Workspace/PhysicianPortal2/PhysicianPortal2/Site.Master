@@ -1,0 +1,118 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="PhysicianPortal2.SiteMaster" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title>Physician Portal</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=8;FF=3;OtherUA=4" />
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder id="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+<!--    ***  RoleGroups is used here to display different menu items based on the group
+             the logged in user belongs to.
+!-->
+    <form id="form1" runat="server">
+    <div id="wrap">
+        <div id="header" style="background-color:Blue; background: url(./Images/blue_background.jpg);">
+          <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+              <div style="height:143px; width:650px;">
+                  <a href="Default.aspx">
+                  <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/laptop-and-stethoscope3.gif" height="143px" width="650px" BorderWidth=0/>
+                  </a>
+              </div>
+              <div style="background-color:Teal; height:26px;">
+                  <div id="labelDiv" style="padding-left:5px; padding-top: 5px;">
+                      <asp:Label ID="lblUser" runat="server" forecolor="#FFFFFF">
+                         <asp:LoginName ID="LoginName1" runat="server" FormatString="Welcome, {0}" />
+                         </asp:Label>
+                      &nbsp&nbsp&nbsp
+                  </div>
+                  <div id="Div1" style="position:absolute; top:129px; left:150px;">
+                      <asp:LoginView ID="LoginView2" runat="server">
+                          <RoleGroups>
+                              <asp:RoleGroup Roles="Admin">
+                                  <ContentTemplate>
+                                      <asp:Menu ID="AdminNavigationMenu" runat="server" 
+                                            Height="26px"
+                                            BackColor="Teal"
+                                            ForeColor="Black"                                     
+                                            Orientation="Horizontal">    
+                                            <DynamicHoverStyle BackColor="Yellow" />   
+                                            <StaticHoverStyle BackColor="Yellow" />   
+                                            <StaticMenuItemStyle BorderColor="Teal" BorderStyle="Groove" BorderWidth="1px" VerticalPadding="10px" Font-Size="Larger" ForeColor="Black" BackColor="Silver"/>                       
+                                          <Items>
+                                              <asp:MenuItem NavigateUrl="~/UserPages/User.aspx" Text=" Patients " Value="patients"/>
+                                              <asp:MenuItem NavigateUrl="~/PhysicianPages/Reports.aspx" Text=" Reports " Value="reports"/>
+                                              <asp:MenuItem NavigateUrl="~/UserPages/Interface.aspx" Text=" Interface " Value="interface"/>
+                                              <asp:MenuItem NavigateUrl="~/AdminPages/Sites.aspx" Text=" Sites " Value="sites"/>
+                                              <asp:MenuItem NavigateUrl="~/AdminPages/Tests.aspx" Text=" Tests " Value="tests"/>
+                                          </Items>
+                                      </asp:Menu>
+                                  </ContentTemplate>
+                              </asp:RoleGroup>
+                              <asp:RoleGroup Roles="Physician">
+                                  <ContentTemplate>
+                                      <asp:Menu ID="PhysicianNavigationMenu" runat="server" 
+                                            Height="26px"
+                                            BackColor="Teal"
+                                            ForeColor="Black"                                     
+                                            Orientation="Horizontal">    
+                                            <DynamicHoverStyle BackColor="Yellow" />   
+                                            <StaticHoverStyle BackColor="Yellow" />   
+                                            <StaticMenuItemStyle BorderColor="Teal" BorderStyle="Groove" BorderWidth="1px" VerticalPadding="10px" Font-Size="Larger" ForeColor="Black" BackColor="Silver"/> 
+                                          <Items>
+                                              <asp:MenuItem NavigateUrl="~/PhysicianPages/Physician.aspx" Text="Physician"/>
+                                              <asp:MenuItem NavigateUrl="~/PhysicianPages/Reports.aspx" Text=" Reports " Value="reports"/>
+                                          </Items>
+                                      </asp:Menu>
+                                  </ContentTemplate>
+                              </asp:RoleGroup>
+                              <asp:RoleGroup Roles="User">
+                                  <ContentTemplate>
+                                      <asp:Menu ID="UserNavigationMenu" runat="server" 
+                                            Height="26px"
+                                            BackColor="Teal"
+                                            ForeColor="Black"                                     
+                                            Orientation="Horizontal">    
+                                            <DynamicHoverStyle BackColor="Yellow" />   
+                                            <StaticHoverStyle BackColor="Yellow" />   
+                                            <StaticMenuItemStyle BorderColor="Teal" BorderStyle="Groove" BorderWidth="1px" VerticalPadding="10px" Font-Size="Larger" ForeColor="Black" BackColor="Silver"/> 
+                                          <Items>
+                                              <asp:MenuItem NavigateUrl="~/UserPages/User.aspx" Text="Patients"/>
+                                              <asp:MenuItem NavigateUrl="~/UserPages/Interface.aspx" Text=" Interface " Value="interface"/>
+                                          </Items>
+                                      </asp:Menu>
+                                  </ContentTemplate>
+                              </asp:RoleGroup>
+                          </RoleGroups>
+                      </asp:LoginView>
+                  </div>
+                  <div id="navDiv" style="position:absolute; top:68px; right:20px;">
+                      <asp:LoginStatus ID="LoginStatus1" runat="server" LoginText="" 
+                    LogoutPageUrl="Default.aspx" LogoutText="  (Logout)  " style="color:White; padding-left:5px; padding-top: 5px; font-weight:bold;" 
+                        align = "right" Height="16px" Visible="True" />
+                  </div>
+              </div>
+              
+           </asp:ContentPlaceHolder>
+        </div>
+
+    
+        <div class="sidebar">
+        <asp:ContentPlaceHolder ID="SidebarContent" runat="server">
+            
+        </asp:ContentPlaceHolder>
+        </div>
+     
+                <asp:ContentPlaceHolder ID="mainContent" runat="server">   
+                      <div id="main" align="center" style="width: 800px; margin:auto;">
+                      </div>    
+                </asp:ContentPlaceHolder>              
+ 
+    </div>
+  </form>  
+</body>
+</html>
